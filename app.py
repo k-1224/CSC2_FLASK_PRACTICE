@@ -6,17 +6,18 @@ app = Flask(__name__)
 
 app.secret_key = 'save_the_seal'
 
-#ROUTES DEFAULT 
-
+#UTILITY FUNCTIONS
+  #DEFAULT ROUTE
 @app.route('/')
 def index():
   flowers, addons = load_data()
   cart = session.get ('cart', {})
   total = calculate_total(cart)
   return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total)
-  
 
-#LOAD DATA FOR '/'
+def calculate_total(cart):
+  total = sum(item['price'] * item ['quantity'] for item in cart.values())
+  return total
 
 def load_data ():
   with open('data/flowers.json') as file:
@@ -26,7 +27,6 @@ def load_data ():
     addons = json.load(file)
     
   return flowers, addons
-
 
 @app.route('/about')
 def about():
@@ -79,14 +79,6 @@ def remove_from_cart(item):
     flash("Item not found in cart")
 
   return redirect(url_for('index'))
-
-
-#COST FUNCTION
-def calculate_total(cost):
-  cart = session.get ('cart', {})
-  total = sum(item['price'] * item['quantity'] for item in cart.values ()) 
-  return total
-
 
 #MUST BE THE LAST CODE
 if __name__ == '__main__':
