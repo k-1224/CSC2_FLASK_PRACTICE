@@ -12,8 +12,9 @@ app.secret_key = 'save_the_seal'
 def index():
   flowers, addons = load_data()
   cart = session.get ('cart', {})
+  selected_addons = session.get ('addons', {})
   total = calculate_total(cart)
-  return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total)
+  return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons)
 
 def calculate_total(cart):
   total = sum(item['price'] * item ['quantity'] for item in cart.values())
@@ -78,6 +79,34 @@ def remove_from_cart(item):
     flash("Item not found in cart")
 
   return redirect(url_for('index'))
+
+@app.route('/select_addon', methods=['POST'])
+def select_addon():
+  selected_addons = {}
+  _, addons = load_data ()  
+  selected_keys = request.form.getlist('addons')
+
+  if not selected_keys:
+    flash("Please select at least one add-on.")
+    return redirect(url_for('index'))
+
+  for addon in selected_keys:
+    if addon in addons:
+      selected_addons[addon] = {
+        'price': float(addons[addon]['price']), 
+        'quantity': 1
+        }
+
+
+  session['selected_addons'] = selected_addons
+  session.modified = True
+
+  print(session)
+
+  flash(f"{len(selected_addons)} add-on(s) added to cart.")
+  return redirect(url_for('index'))
+
+
 
 #MUST BE THE LAST CODE
 if __name__ == '__main__':
