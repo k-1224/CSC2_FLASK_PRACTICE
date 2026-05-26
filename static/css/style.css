@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Knewave&family=Lacquer&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Rose garden palette ──────────────────────
+   Blush background  #F9EEF0
+   Light pink        #F0BAC5
+   Main rose         #D4537E
+   Dark rose         #99355A
+   Nav hover         #B8456A
+   Green accent      #4B5C35
+   Light green bg    #EFF6E2
+─────────────────────────────────────────── */
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+
+header {
+  display: block;
+  text-align: center;
+  background-color: #F38B7E;
+}
+
+header h1 {
+  font-size: clamp(16px, 10vw, 52px);  
+  font-family: "Knewave", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: #F0BAC5;
+  font-size: (0.4em, 2vw, 3.5rem);
+}
+
+/* ── NAVIGATION ── */
+
+nav {
+  display: flex;
+  background-color: #f49b90;
+  justify-content: center;
+}
+
+nav a {
+  text-decoration: none;
+  margin: auto;
+  font-family: "Knewave", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(6px, 3vw, 16px);
+  color: white;
+}
+
+nav a:hover {
+  background-color:#B8456A
+}
+
+/* ── MAIN ── */
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color:#F9EEF0;
+}
+
+/* ── FORM ── */
+
+form {
+  margin: 10px 0px 10px 10px;
+  width: 40vh;
+  border: 1px solid#F0BAC5;
+  border-radius: 6px;
+  background-color: #F0BAC5;
+  justify-content: center;
+  align-items: center;
+}
+
+form label {
+  width: 100%;
+}
+
+form select,
+form input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #99355A;
+  padding: 1vh 0;
+  border-radius: 6px;
+  font-size: 20px;
+}
+
+fieldset {
+  border: none;
+  height: clamp(5vh, 24vh, 25vh);
+  margin: 10px;
+}
+
+form legend, 
+form label {
+  font-size: clamp(0.8rem, 1.4vw, 5rem);
+}
+
+
+
+
