@@ -25,7 +25,7 @@ body {
 header {
   display: block;
   text-align: center;
-  background-color: #F38B7E;
+  background-color: #D4537E;
 }
 
 header h1 {
@@ -33,15 +33,14 @@ header h1 {
   font-family: "Knewave", system-ui;
   font-weight: 400;
   font-style: normal;
-  color: #F0BAC5;
-  font-size: (0.4em, 2vw, 3.5rem);
+  color: #F9EEF0;
 }
 
 /* ── NAVIGATION ── */
 
 nav {
   display: flex;
-  background-color: #f49b90;
+  background-color: #99355A;
   justify-content: center;
 }
 
@@ -51,8 +50,8 @@ nav a {
   font-family: "Knewave", system-ui;
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(6px, 3vw, 16px);
-  color: white;
+  font-size: clamp(6px, 3.6vw, 18px);
+  color: #F0BAC5;
 }
 
 nav a:hover {
@@ -71,13 +70,13 @@ main {
 /* ── FORM ── */
 
 form {
-  margin: 10px 0px 10px 10px;
-  width: 40vh;
+  margin: 10px 0 0 0;
   border: 1px solid#F0BAC5;
   border-radius: 6px;
   background-color: #F0BAC5;
   justify-content: center;
   align-items: center;
+  height: clamp(5vh, 25vh, 28vh);
 }
 
 form label {
@@ -89,15 +88,8 @@ form input {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #99355A;
-  padding: 1vh 0;
   border-radius: 6px;
   font-size: 20px;
-}
-
-fieldset {
-  border: none;
-  height: clamp(5vh, 24vh, 25vh);
-  margin: 10px;
 }
 
 form legend, 
@@ -106,5 +98,56 @@ form label {
 }
 
 
+fieldset {
+  border: none;
+  height: auto;
+  margin: 10px;
+}
+
+fieldset button {
+  background-color: #99355A;
+  border: none;
+  width: 100%;
+  margin: 10px auto auto auto;
+  height: 5vh;
+  color: #F9EEF0;
+  border-radius: 6px;
+}
 
 
+/*--- MEDIA 600PX ---*/
+
+@media (max-width: 600px) {
+  /* ── FORM ── */
+  form {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  fieldset {
+    height: auto;      
+    margin: 6px;
+  }
+
+  fieldset button {
+    height: 6vh;        
+    font-size: 1rem;
+  }
+
+  form select,
+  form input {
+    font-size: 16px;   
+  }
+
+  /* ── CART LIST ── */
+  main ul {
+    width: 90%;
+    padding: 0 10px;
+  }
+
+  main ul li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    word-break: break-word;
+  }
+}
