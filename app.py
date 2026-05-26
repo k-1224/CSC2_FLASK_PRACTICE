@@ -32,14 +32,13 @@ def load_data ():
 def about():
   return render_template('about.html')
 
-@app.route('/checkout')
-def checkout():
-  return render_template('invoice.html')
-
 @app.route('/orders')
 def order_history():
   return render_template('order_history.html')
 
+@app.route('/checkout')
+def invoice():
+  return render_template('invoice.html')
 
 #ROUTE AND FUNCTION
 @app.route('/add_to_cart', methods=['POST'])
