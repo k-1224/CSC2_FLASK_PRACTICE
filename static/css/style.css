@@ -79,10 +79,6 @@ form {
   height: clamp(5vh, 25vh, 28vh);
 }
 
-form label {
-  width: 100%;
-}
-
 form select,
 form input {
   width: 100%;
@@ -102,6 +98,7 @@ fieldset {
   border: none;
   height: auto;
   margin: 10px;
+  width: 350px;
 }
 
 fieldset button {
