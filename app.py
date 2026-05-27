@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 app.secret_key = 'save_the_seal'
 
-#UTILITY FUNCTIONS
-  #DEFAULT ROUTE
+# ——— UTILITY FUNCTIONS ——— #
+  # ——— DEFAULT ROUTE ——— #
 @app.route('/')
 def index():
   flowers, addons = load_data()
@@ -42,7 +42,8 @@ def order_history():
 def invoice():
   return render_template('invoice.html')
 
-#ROUTE AND FUNCTION
+# ——— ROUTE AND FUNCTION ——— #
+  # ——— FUNCTION CART ——— #
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
   flower = request.form['flower']
@@ -69,12 +70,14 @@ def add_to_cart():
   flash(f"{quantity} {flower}(s) added to cart.")   
   return redirect(url_for('index'))
 
+  # ——— FUNCTION REMOVE CART ——— #
+
 @app.route('/remove_from_cart/<item>')
 def remove_from_cart(item):
   cart = session.get('cart', {})
   
   if item in cart:
-    del cart[item.capitalize()]
+    del cart[item]
     session['cart'] = cart
     session.modified = True
     flash(f"Removed all {item} from the cart.")
@@ -82,6 +85,8 @@ def remove_from_cart(item):
     flash("Item not found in cart")
 
   return redirect(url_for('index'))
+
+  # ——— FUNCTION ADDON ——— #
 
 @app.route('/select_addon', methods=['POST'])
 def select_addon():
@@ -109,8 +114,24 @@ def select_addon():
   flash(f"{len(selected_addons)} add-on(s) added to cart.")
   return redirect(url_for('index'))
 
+  # ——— FUNCTION REMOVE ADDON ——— #
+
+@app.route('/remove_from_selected_addons/<item>')
+def remove_from_selected_addons(item):
+  selected_addons = session.get('selected_addons', {})
+  
+  if item in selected_addons:
+    del selected_addons[item]
+    session['selected_addons'] = selected_addons
+    session.modified = True
+    flash(f"Removed all {item} from the add-on(s).")
+  else:
+    flash("Item not found in add-on(s)")
+
+  return redirect(url_for('index'))
 
 
-#MUST BE THE LAST CODE
+
+# ——— ALWAYS LAST CODE ——— # 
 if __name__ == '__main__':
   app.run(debug=True)

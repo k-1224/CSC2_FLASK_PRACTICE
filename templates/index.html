@@ -19,7 +19,7 @@
         <button type="submit">Add to cart</button>
       </fieldset>
     </form>
-    <form action="{{ url_for('select_addon') }}" method="post">
+    <form class="add-on" action="{{ url_for('select_addon') }}" method="post">
       <fieldset>
         <legend>Add-ons
         {% for addon, data in addons.items() %}
@@ -61,6 +61,7 @@
             <li>{{ item }}: {{ '%.2f' % details['quantity'] }} x
                                         ${{ details['price'] }}
                 = ${{ details['quantity'] * details['price'] }}
+                <a href="{{ url_for('remove_from_selected_addons', item=item) }}">[Remove]</a>       
               </li>
           {% endfor %}
         </ul>
