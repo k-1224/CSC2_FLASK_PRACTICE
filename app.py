@@ -12,13 +12,14 @@ app.secret_key = 'save_the_seal'
 def index():
   flowers, addons = load_data()
   cart = session.get ('cart', {})
-  selected_addons = session.get ('addons', {})
-  total = calculate_total(cart)
+  selected_addons = session.get ('selected_addons', {})
+  total = calculate_total(cart, selected_addons)
   return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons)
 
-def calculate_total(cart):
-  total = sum(item['price'] * item ['quantity'] for item in cart.values())
-  return total
+def calculate_total(cart, selected_addons):
+  flower_total = sum(item['price'] * item['quantity'] for item in cart.values())
+  addon_total = sum(item['price'] * item['quantity'] for item in selected_addons.values())
+  return flower_total + addon_total
 
 def load_data ():
   with open('data/flowers.json') as file:
@@ -60,6 +61,8 @@ def add_to_cart():
       'price': flowers[flower]['price'],
       'quantity': quantity
     }  
+
+  print(session)
 
   session['cart'] = cart 
   session.modified = True
