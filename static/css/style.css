@@ -15,9 +15,11 @@
    Light green bg    #EFF6E2
 ─────────────────────────────────────────── */
 
-body {
-  display: flex;
-  flex-direction: column;
+main {
+  min-height: 100vh;
+  background-color: #F9EEF0;
+  overflow: hidden;
+  padding-bottom: 5vh;
 }
 
 /* ── HEADER ── */
@@ -58,58 +60,70 @@ nav a:hover {
   background-color:#B8456A
 }
 
-/* ── MAIN ── */
-
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color:#F9EEF0;
-}
 
 /* ── FORM ── */
-
 form {
-  margin: 10px 0 0 0;
-  border: 1px solid#F0BAC5;
-  border-radius: 6px;
-  background-color: #F0BAC5;
-  justify-content: center;
-  align-items: center;
-  height: clamp(5vh, 25vh, 28vh);
+  display: flex;
+  margin: 0px 5px 50px 5px;
+  width: 45vh;
+  border-radius: 12px;
+  padding: 5px 10px;
 }
-
-form select,
-form input {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #99355A;
-  border-radius: 6px;
-  font-size: 20px;
-}
-
-form legend, 
-form label {
-  font-size: clamp(0.8rem, 1.4vw, 5rem);
-}
-
 
 fieldset {
+  border: 1px solid #99355A;
+  background-color: #F0BAC5;
+  padding: 10px;
+}
+
+fieldset ul {
+  list-style: none;
+}
+
+legend {
+  color: #99355A;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+label {
+  display: flex;
+  align-items: center;
+}
+
+fieldset input {
+  display: flex;
+  margin: 5px 4px 5px 0px;
   border: none;
-  height: auto;
-  margin: 10px;
-  width: 350px;
+  border: 1px solid #99355A;
+  height: 4vh;
+  border-radius: 4px;
 }
 
 fieldset button {
   background-color: #99355A;
   border: none;
-  width: 100%;
-  margin: 10px auto auto auto;
-  height: 5vh;
+  border-radius: 8px;
   color: #F9EEF0;
-  border-radius: 6px;
+  padding: 4px;
+  width: 45vh;
 }
+
+.total-cart {
+  display: flex;
+  margin: 0px 5px 50px 5px;
+  width: 45vh;
+  border-radius: 12px;
+  padding: 5px 10px;
+}
+
+footer {
+  background-color: #EFF6E2;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0px;
+}
+
 
 
 /*--- MEDIA 600PX ---*/
@@ -148,3 +162,5 @@ fieldset button {
     word-break: break-word;
   }
 }
+
+
