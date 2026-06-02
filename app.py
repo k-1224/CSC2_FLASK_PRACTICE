@@ -13,13 +13,14 @@ def index():
   flowers, addons = load_data()
   cart = session.get ('cart', {})
   selected_addons = session.get ('selected_addons', {})
-  total = calculate_total(cart, selected_addons)
-  return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons)
+  total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons)
+  return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons, flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal)
 
 def calculate_total(cart, selected_addons):
-  flower_total = sum(item['price'] * item['quantity'] for item in cart.values())
-  addon_total = sum(item['price'] * item['quantity'] for item in selected_addons.values())
-  return flower_total + addon_total
+  flower_subtotal = sum(item['price'] * item['quantity'] for item in cart.values())
+  addon_subtotal = sum(item['price'] * item['quantity'] for item in selected_addons.values())
+  total = flower_subtotal + addon_subtotal
+  return total, flower_subtotal, addon_subtotal
 
 def load_data ():
   with open('data/flowers.json') as file:
@@ -51,7 +52,7 @@ def add_to_cart():
   flowers, addons = load_data()
   cart = session.get('cart', {})
 
-  if flower not in flowers:
+  if flower not in flowers: 
     flash("Invalid flower selected.")
     return redirect(url_for('index.html'))
   
@@ -63,7 +64,7 @@ def add_to_cart():
       'quantity': quantity
     }  
 
-  print(session)
+  print(session)  
 
   session['cart'] = cart 
   session.modified = True
@@ -87,7 +88,6 @@ def remove_from_cart(item):
   return redirect(url_for('index'))
 
   # ——— FUNCTION ADDON ——— #
-
 @app.route('/select_addon', methods=['POST'])
 def select_addon():
   selected_addons = {}
@@ -105,11 +105,10 @@ def select_addon():
         'quantity': 1
         }
 
-
   session['selected_addons'] = selected_addons
   session.modified = True
 
-  print(session)
+  print(session)  
 
   flash(f"{len(selected_addons)} add-on(s) added to cart.")
   return redirect(url_for('index'))
