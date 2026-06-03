@@ -13,7 +13,7 @@ def index():
   flowers, addons = load_data()
   cart = session.get ('cart', {})
   selected_addons = session.get ('selected_addons', {})
-  total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons)
+  total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons) 
   return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons, flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal)
 
 def calculate_total(cart, selected_addons):
@@ -21,6 +21,8 @@ def calculate_total(cart, selected_addons):
   addon_subtotal = sum(item['price'] * item['quantity'] for item in selected_addons.values())
   total = flower_subtotal + addon_subtotal
   return total, flower_subtotal, addon_subtotal
+
+
 
 def load_data ():
   with open('data/flowers.json') as file:
@@ -52,6 +54,10 @@ def add_to_cart():
   flowers, addons = load_data()
   cart = session.get('cart', {})
 
+  if quantity >= 100:
+    flash("You are ordering a lot! Consider calling us for a special deal.")
+    return redirect(url_for('index'))
+
   if flower not in flowers: 
     flash("Invalid flower selected.")
     return redirect(url_for('index.html'))
@@ -63,6 +69,7 @@ def add_to_cart():
       'price': flowers[flower]['price'],
       'quantity': quantity
     }  
+    
 
   print(session)  
 
