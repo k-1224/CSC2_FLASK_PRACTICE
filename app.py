@@ -16,6 +16,7 @@ def index():
   total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons) 
   return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons, flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal)
 
+  # ——— UTILITY CALCULATE TOTAL ——— #
 def calculate_total(cart, selected_addons):
   flower_subtotal = sum(item['price'] * item['quantity'] for item in cart.values())
   addon_subtotal = sum(item['price'] * item['quantity'] for item in selected_addons.values())
@@ -55,7 +56,7 @@ def add_to_cart():
   cart = session.get('cart', {})
 
   if quantity >= 100:
-    flash("You are ordering a lot! Consider calling us for a special deal.")
+    flash("You are ordering a lot! Consider calling us for a special deal.", "error")
     return redirect(url_for('index'))
 
   if flower not in flowers: 
@@ -69,7 +70,6 @@ def add_to_cart():
       'price': flowers[flower]['price'],
       'quantity': quantity
     }  
-    
 
   print(session)  
 
@@ -79,7 +79,6 @@ def add_to_cart():
   return redirect(url_for('index'))
 
   # ——— FUNCTION REMOVE CART ——— #
-
 @app.route('/remove_from_cart/<item>')
 def remove_from_cart(item):
   cart = session.get('cart', {})
@@ -88,7 +87,7 @@ def remove_from_cart(item):
     del cart[item]
     session['cart'] = cart
     session.modified = True
-    flash(f"Removed all {item} from the cart.")
+    flash(f"Removed all {item} from the cart.", "error")
   else:
     flash("Item not found in cart")
 
@@ -102,7 +101,7 @@ def select_addon():
   selected_keys = request.form.getlist('addons')
 
   if not selected_keys:
-    flash("Please select at least one add-on.")
+    flash("Please select at least one add-on.", "error")
     return redirect(url_for('index'))
 
   for addon in selected_keys:
@@ -121,7 +120,6 @@ def select_addon():
   return redirect(url_for('index'))
 
   # ——— FUNCTION REMOVE ADDON ——— #
-
 @app.route('/remove_from_selected_addons/<item>')
 def remove_from_selected_addons(item):
   selected_addons = session.get('selected_addons', {})
@@ -130,12 +128,23 @@ def remove_from_selected_addons(item):
     del selected_addons[item]
     session['selected_addons'] = selected_addons
     session.modified = True
-    flash(f"Removed all {item} from the add-on(s).")
+    flash(f"Removed all {item} from the add-on(s).", "error")
   else:
-    flash("Item not found in add-on(s)")
+    flash("Item not found in add-on(s)", "error")
 
   return redirect(url_for('index'))
 
+  # ——— FUNCTION CANCEL ORDER ——— #
+@app.route('/cancel_order', methods=['POST'])
+def cancel_order():
+  session.pop('cart', None)
+  session.pop('selected_addons', None)
+  flash("Your order has been cancelled.", "error")
+  return redirect(url_for('index'))
+
+
+
+  return redirect(url_for('index'))
 
 
 # ——— ALWAYS LAST CODE ——— # 
