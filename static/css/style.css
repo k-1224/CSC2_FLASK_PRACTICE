@@ -64,35 +64,50 @@ nav a:hover {
 /* ── FORM ── */
 form {
   display: flex;
-  margin: 0px 5px 50px 5px;
+  margin-left: 5px;
   width: 45vh;
   border-radius: 12px;
   padding: 5px 10px;
+}
+
+form select {
+  display: flex;
+  margin: 5px 4px 5px 0px;
+  border: none;
+  border: 1px solid #99355A;
+  height: 4vh;
+  border-radius: 4px;
 }
 
 fieldset {
   border: 1px solid #99355A;
   background-color: #F0BAC5;
   padding: 10px 10px 15px 10px;
-  overflow: hidden;
-
 }
 
 .cart-empty {
   position: absolute;
 }
 
+fieldset h4 {
+  display: flex;
+  justify-content: end;
+}
+
+.addon-subtotal hr{
+  border: 1px solid #99355A;
+}
+
 .total-cart {
   display: flex;
   max-width: 60vh;
-  max-height: 40vh;
   border-radius: 12px;
   padding: 5px 10px;
 }
 
 .total-form {
   width: 100%;
-  height: 200px;
+  height: auto;
   display: grid;
 }
 
@@ -110,6 +125,10 @@ legend {
   color: #99355A;
   font-weight: 400;
   font-size: 1.2rem;
+}
+
+.flashes {
+  padding-left: 10px;
 }
 
 label {
