@@ -59,14 +59,12 @@
                 <p class="cart-empty">Your cart is empty</p>
             {% endif %}
             <div class="flower-subtotal">
-              <p>Flower Subtotal: ${{ "%.2f" % flower_subtotal }}</p>
+              <p>Flower Subtotal: ${{ "%.2f" % flower_subtotal }}</p> 
             </div>
             {% if selected_addons %}
               <ul>  
                 {% for item, details in selected_addons.items () %}
-                  <li>{{ item }}: {{ '%.2f' % details['quantity'] }} x
-                                              ${{ details['price'] }}
-                      = ${{ details['quantity'] * details['price'] }}
+                  <li>{{ item }}: ${{ details['price'] }}
                       <a href="{{ url_for('remove_from_selected_addons', item=item) }}">[Remove]</a>       
                     </li>
                 {% endfor %}
@@ -74,7 +72,7 @@
                     
             {% endif %}  
             <div class="addon-subtotal">
-              <p>Addon Subtotal: ${{ "%.2f" % addon_subtotal }}</p>
+              <p>Add-ons Subtotal: ${{ "%.2f" % addon_subtotal }}</p>
               <hr>
             </div>  
           <h4>Total: ${{ "%.2f" % total}}</h4>
