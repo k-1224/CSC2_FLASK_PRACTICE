@@ -87,6 +87,8 @@ fieldset {
 
 .cart-empty {
   position: absolute;
+  color: #99355a98;
+  font-style: italic;
 }
 
 fieldset h4 {
@@ -96,6 +98,7 @@ fieldset h4 {
 
 .addon-subtotal hr{
   border: 1px solid #99355A;
+  margin-bottom: 5px;
 }
 
 .total-cart {
@@ -129,6 +132,12 @@ legend {
 
 .flashes {
   padding-left: 10px;
+  color: rgb(137, 202, 114);
+  font-weight: bold;
+}
+
+.error {
+  color: rgb(202, 114, 114);
 }
 
 label {
@@ -152,6 +161,12 @@ fieldset button {
   color: #F9EEF0;
   padding: 4px;
   width: 45vh;
+  height: 35px;
+  cursor: pointer;
+}
+
+fieldset button:active {
+  background-color: #99355af1;
 }
 
 
@@ -162,7 +177,14 @@ footer {
   padding: 20px 0px;
 }
 
-
+.cancel-button {
+  width: auto;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
 
 /*--- MEDIA 600PX ---*/
 

@@ -32,16 +32,16 @@
               <button type="submit">Add to cart</button>
         </fieldset>
       </form>
-      {% with messages = get_flashed_messages () %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <ul class="flashes">
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}  
+          <ul class=flashes>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
           </ul>
         {% endif %}
-      {% endwith %} 
-      <div class="total-cart">
+      {% endwith %}
+      <form class="" method="post">
         <fieldset class="total-form"> 
           <legend>Your Cart</legend>
           {% if cart %}
@@ -69,15 +69,16 @@
                     </li>
                 {% endfor %}
               </ul>
-                    
             {% endif %}  
             <div class="addon-subtotal">
               <p>Add-ons Subtotal: ${{ "%.2f" % addon_subtotal }}</p>
               <hr>
             </div>  
           <h4>Total: ${{ "%.2f" % total}}</h4>
+            <button class="cancel-button" type="submit" formaction="{{ url_for('cancel_order') }}">Cancel Order</button>
+          </form>
         </fieldset>
-      </div>    
+      </form>  
     </main>    
   </body>
 
