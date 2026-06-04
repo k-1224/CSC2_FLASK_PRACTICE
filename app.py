@@ -1,5 +1,5 @@
 import json
-
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 app = Flask(__name__)
@@ -41,10 +41,6 @@ def about():
 @app.route('/orders')
 def order_history():
   return render_template('order_history.html')
-
-@app.route('/checkout')
-def invoice():
-  return render_template('invoice.html')
 
 # ——— ROUTE AND FUNCTION ——— #
   # ——— FUNCTION CART ——— #
@@ -115,8 +111,8 @@ def select_addon():
   session.modified = True
 
   print(session)  
-
   flash(f"{len(selected_addons)} add-on(s) added to cart.")
+
   return redirect(url_for('index'))
 
   # ——— FUNCTION REMOVE ADDON ——— #
@@ -139,14 +135,36 @@ def remove_from_selected_addons(item):
 def cancel_order():
   session.pop('cart', None)
   session.pop('selected_addons', None)
-  flash("Your order has been cancelled.", "error")
-  return redirect(url_for('index'))
-
-
+  flash("Your order has been cancelled.", "error")  
 
   return redirect(url_for('index'))
 
+  # ——— FUNCTION CHECKOUT ——— #
+@app.route('/checkout', methods=['POST'])
+def invoice():
+  customer_name = request.form['customer_name'].strip().title()
+  
+  if not customer_name:
+    flash("Customer name is required.")
+    return(redirect(url_for('index')))
+  
+  cart = session.get('cart', {})
+  selected_addons = session.get('selected_addons', {})
 
-# ——— ALWAYS LAST CODE ——— # 
+  if not cart:
+    flash("Select flower to continue.", "error")
+    return(redirect(url_for('index')))
+
+  total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons)
+  invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+  invoice_number = f"INV_{customer_name.replace(' ', '_')}_{invoice_date}"
+
+  session.pop('cart', None)
+  session.pop('selected_addons', None)
+  
+  return render_template('invoice.html', customer_name=customer_name, cart=cart, selected_addons=selected_addons, total=total, flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal, invoice_date=invoice_date, invoice_number=invoice_number) 
+
+
+# ——— ALWAYS LAST CODE ——— #  
 if __name__ == '__main__':
   app.run(debug=True)
