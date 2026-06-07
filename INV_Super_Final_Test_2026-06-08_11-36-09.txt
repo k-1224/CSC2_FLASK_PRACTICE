@@ -1,0 +1,16 @@
+---- Flower Shop Invoice ----
+
+Invoice Number: INV_Super_Final_Test_2026-06-08_11-36-09
+Customer Name: Super Final Test
+Date: 2026-06-08_11-36-09
+
+Items:
+-Rose: 1 x  $10 = $10.00
+-Sakura: 1 x  $15 = $15.00
+
+Add-ons:
+-Personlised Note: $3.00
+-Ribbon: $2.00
+-Specialty Wrapping Paper: $5.00
+
+Total: $35.00
