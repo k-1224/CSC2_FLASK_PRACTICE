@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-
 {% block title %} Home - Flower Shop {% endblock %}
 
 {% block content %}
@@ -41,7 +40,7 @@
           </ul>
         {% endif %}
       {% endwith %}
-      <form class="" method="post">
+      <form method="post">
         <fieldset class="total-form"> 
           <legend>Your Cart</legend>
           {% if cart %}
@@ -75,8 +74,11 @@
               <hr>
             </div>  
           <h4>Total: ${{ "%.2f" % total}}</h4>
-            <button class="cancel-button" type="submit" formaction="{{ url_for('cancel_order') }}">Cancel Order</button>
-          </form>
+          <label for="customer_name_checkout">Your Name:</label>
+          <input type="text" name="customer_name" id="customer_name_checkout" required>
+          <button type="submit" formaction="{{ url_for('invoice')}}">Checkout</button>
+          <button class="cancel-button" type="submit" formaction="{{ url_for('cancel_order') }}"
+            onclick="return confirm('Are you sure you want to cancel your order?')" >Cancel Order</button>
         </fieldset>
       </form>  
     </main>    
