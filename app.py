@@ -30,16 +30,28 @@ def index():
     flowers, addons = load_data()
     cart = session.get ('cart', {})
     selected_addons = session.get ('selected_addons', {})
-    total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons) 
-    return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons, flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal)
+    total, flower_subtotal, addon_subtotal, discount_applied, subtotal, discount_amount = calculate_total(cart, selected_addons) 
+    return render_template('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons, 
+                           flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal, 
+                           discount_applied=discount_applied, subtotal=subtotal, discount_amount=discount_amount)
 
   # ——— UTILITY CALCULATE TOTAL ——— #
 def calculate_total(cart, selected_addons):
     flower_subtotal = sum(item['price'] * item['quantity'] for item in cart.values())
     addon_subtotal = sum(item['price'] * item['quantity'] for item in selected_addons.values())
-    total = flower_subtotal + addon_subtotal
-    return total, flower_subtotal, addon_subtotal
 
+    subtotal = flower_subtotal + addon_subtotal
+
+    discount_applied = False
+    discount_amount = 0
+    total = subtotal
+
+    if subtotal > 180:
+        discount_amount = subtotal * 0.1
+        total = subtotal - discount_amount
+        discount_applied = True
+
+    return total, flower_subtotal, addon_subtotal, discount_applied, subtotal, discount_amount
 
 
 def load_data ():
@@ -75,6 +87,7 @@ def add_to_cart():
     if flower not in flowers: 
         flash("Invalid flower selected.")
         return redirect(url_for('index.html'))
+    
   
     if flower in cart: 
         cart[flower]['quantity'] += quantity
@@ -172,7 +185,7 @@ def invoice():
         flash("Select flower to continue.", "error")
         return(redirect(url_for('index')))
 
-    total, flower_subtotal, addon_subtotal = calculate_total(cart, selected_addons)
+    total, flower_subtotal, addon_subtotal, discount_applied, subtotal, discount_amount = calculate_total(cart, selected_addons)
     invoice_date = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     invoice_number = f"INV_{customer_name.replace(' ', '_')}_{invoice_date}"
 
@@ -191,8 +204,7 @@ def invoice():
     print(f"\nSaved order for: {customer_name}")
     print(f"Cart: {cart}")
     print(f"Add-ons: {selected_addons}")
-    print(f"Total: {total}\n")
-
+    print(f"Total: {total}\n")   
 
     with open(invoice_filename, "w") as f:
         f.write("---- Flower Shop Invoice ----\n\n")
@@ -208,12 +220,16 @@ def invoice():
         f.write(f"Add-ons:\n")
 
         for item, details in selected_addons.items():
-                f.write(f"-{item}: ${details['price']:.2f}\n")
+            f.write(f"-{item}: ${details['price']:.2f}\n")
 
         f.write("\n")
+        f.write(f"Subtotal: ${subtotal:.2f}\n")
+        f.write(f"Discount (10%): -${discount_amount}\n")
         f.write(f"Total: ${total:.2f}")
 
-    return render_template('invoice.html', customer_name=customer_name, cart=cart, selected_addons=selected_addons, total=total, flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal, invoice_date=invoice_date, invoice_number=invoice_number) 
+    return render_template('invoice.html', customer_name=customer_name, cart=cart, selected_addons=selected_addons, total=total, 
+                           flower_subtotal=flower_subtotal, addon_subtotal=addon_subtotal, invoice_date=invoice_date, 
+                           invoice_number=invoice_number, discount_applied=discount_applied, subtotal=subtotal, discount_amount=discount_amount) 
 
 # ——— ALWAYS LAST CODE ——— #  
 if __name__ == '__main__':

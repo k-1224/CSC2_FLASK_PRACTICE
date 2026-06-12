@@ -73,6 +73,9 @@
               <p>Add-ons Subtotal: ${{ "%.2f" % addon_subtotal }}</p>
               <hr>
             </div>  
+          {% if discount_applied %}
+            <p class="discount-p">10% Discount applied</p>
+          {% endif %}
           <h4>Total: ${{ "%.2f" % total}}</h4>
           <label for="customer_name_checkout">Your Name:</label>
           <input type="text" name="customer_name" id="customer_name_checkout" required>

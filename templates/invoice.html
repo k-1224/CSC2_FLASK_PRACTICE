@@ -24,6 +24,7 @@
     {% endif %}
     <h4>Flower Subtotal: ${{ "%.2f" % flower_subtotal }}</h4>
     <h4>Add-ons Subtotal: ${{ "%.2f" % addon_subtotal }}</h4>
+    <h4>Discount(10%): ${{ discount_amount }}</h4>
     <h3>Total: ${{ "%.2f" % total }}</h3>
     <a href=" {{ url_for('index') }}">Back to shop</a>
   </div>
